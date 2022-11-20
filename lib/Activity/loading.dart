@@ -19,7 +19,7 @@ class _LoadingState extends State<Loading> {
   String city = "";
   String description = "";
 
-  void startup(String input) async{
+  void startup(String input) async {
     GetData instance = GetData(location: input);
     await instance.getData();
 
@@ -32,15 +32,15 @@ class _LoadingState extends State<Loading> {
     city = instance.city;
     description = instance.description;
 
-    Navigator.pushReplacementNamed(context, "/home",arguments: {
-      "temp" : temp,
-      "feelsLike" : feelsLike,
-      "humidity" : humidity,
-      "tempMin" : tempMin,
-      "tempMax" : tempMax,
-      "main" : main,
-      "city" : city,
-      "description" : description,
+    Navigator.pushReplacementNamed(context, "/home", arguments: {
+      "temp": temp,
+      "feelsLike": feelsLike,
+      "humidity": humidity,
+      "tempMin": tempMin,
+      "tempMax": tempMax,
+      "main": main,
+      "city": city,
+      "description": description,
     });
   }
 
@@ -49,19 +49,22 @@ class _LoadingState extends State<Loading> {
     super.initState();
     // print("this is init state");
   }
+
   @override
   Widget build(BuildContext context) {
-    try{
+    try {
       Map data = ModalRoute.of(context)?.settings.arguments as Map;
       input = data["text"];
-    } catch(e){
+    } catch (e) {
       print(e);
     }
     startup(input);
     return Scaffold(
       body: SafeArea(
-      child: Text("Loading"),
-      )
+        child: Center(
+          child: Text("Loading"),
+        ),
+      ),
     );
   }
 }
