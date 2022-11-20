@@ -9,6 +9,7 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
+  String input = "rajshahi";
   String temp = "";
   String feelsLike = "";
   String humidity = "";
@@ -18,8 +19,8 @@ class _LoadingState extends State<Loading> {
   String city = "";
   String description = "";
 
-  void startup() async{
-    GetData instance = GetData(location: "rajshahi");
+  void startup(String input) async{
+    GetData instance = GetData(location: input);
     await instance.getData();
 
     temp = instance.temp;
@@ -45,11 +46,18 @@ class _LoadingState extends State<Loading> {
 
   @override
   void initState() {
-    startup();
     super.initState();
+    // print("this is init state");
   }
   @override
   Widget build(BuildContext context) {
+    try{
+      Map data = ModalRoute.of(context)?.settings.arguments as Map;
+      input = data["text"];
+    } catch(e){
+      print(e);
+    }
+    startup(input);
     return Scaffold(
       body: SafeArea(
       child: Text("Loading"),
