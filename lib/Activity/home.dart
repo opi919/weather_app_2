@@ -13,43 +13,31 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     Map info = ModalRoute.of(context)!.settings.arguments as Map;
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            // search
-            Container(
-              padding: EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: searchController,
-                      decoration: InputDecoration(
-                        hintText: "Search",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      if (searchController.text.isNotEmpty) {
-                        Navigator.pushNamed(context, "/loading", arguments: {
-                          "text": searchController.text,
-                        });
-                      }
-                    },
-                    icon: Icon(Icons.search),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Container(
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/background.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.fromLTRB(20, 100, 20, 100),
+                  margin: EdgeInsets.all(40),
                   decoration: const BoxDecoration(
-                      // color: Colors.green,
+                      border: Border(
+                        top: BorderSide(width: 1.0, color: Colors.grey),
+                        left: BorderSide(width: 1.0, color: Colors.grey),
+                        right: BorderSide(width: 1.0, color: Colors.grey),
+                        bottom: BorderSide(width: 1.0, color: Colors.grey),
                       ),
+                      // color: Colors.green,
+                      borderRadius: BorderRadius.all(Radius.circular(150))),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -57,18 +45,19 @@ class _HomeState extends State<Home> {
                         Expanded(
                           child: Container(
                             alignment: Alignment.center,
-                            width: 200,
-                            height: 200,
                             decoration: const BoxDecoration(
-                                // color: Colors.blue.withOpacity(0.5),
+                                // color: Colors.blue,
                                 ),
                             child: Column(
                               children: [
+                                // image
+                                Image.network(
+                                    "http://openweathermap.org/img/wn/${info['icon'].toString()}.png"),
                                 // show double value to 2 point
                                 Text(
                                   "${double.parse(info["temp"])}°C",
                                   style: const TextStyle(
-                                    fontSize: 50,
+                                    fontSize: 30,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -76,18 +65,36 @@ class _HomeState extends State<Home> {
                                   "${info["description"]} in ${info["city"]}",
                                   style: const TextStyle(fontSize: 12),
                                 ),
-                                Text(
-                                  "Feels: ${double.parse(info["feelsLike"])}°C",
-                                  style: TextStyle(fontSize: 12),
+                                // Text(
+                                //   "Feels: ${double.parse(info["feelsLike"])}°C",
+                                //   style: TextStyle(fontSize: 12),
+                                // ),
+                                // Text(
+                                //   "${info["humidity"]}%",
+                                //   style: TextStyle(fontSize: 20),
+                                // ),
+                                // Text(
+                                //   "H: ${double.parse(info["tempMin"])}°C  L: ${double.parse(info["tempMax"])}°C",
+                                //   style: TextStyle(fontSize: 12),
+                                // ),
+                                TextField(
+                                  textAlign: TextAlign.center,
+                                  controller: searchController,
+                                  decoration: InputDecoration(
+                                    hintText: "Search",
+                                    contentPadding: EdgeInsets.all(10),
+                                  ),
                                 ),
-                                Text(
-                                  "${info["humidity"]}%",
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                Text(
-                                  "H: ${double.parse(info["tempMin"])}°C  L: ${double.parse(info["tempMax"])}°C",
-                                  style: TextStyle(fontSize: 12),
-                                ),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      if (searchController.text.isNotEmpty) {
+                                        Navigator.pushNamed(context, "/loading",
+                                            arguments: {
+                                              "text": searchController.text,
+                                            });
+                                      }
+                                    },
+                                    child: Text("Search"))
                               ],
                             ),
                           ),
@@ -95,39 +102,8 @@ class _HomeState extends State<Home> {
                       ]),
                     ],
                   )),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        // color: Colors.red.withOpacity(0.5),
-                        ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "Made by Momen Khandoker",
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                        Text(
-                          "Data provided by OpenWeatherMap,org",
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );

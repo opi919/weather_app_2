@@ -18,6 +18,7 @@ class _LoadingState extends State<Loading> {
   String main = "";
   String city = "";
   String description = "";
+  String icon = "";
 
   void startup(String input) async {
     GetData instance = GetData(location: input);
@@ -31,6 +32,7 @@ class _LoadingState extends State<Loading> {
     main = instance.main;
     city = instance.city;
     description = instance.description;
+    icon = instance.icon;
 
     Navigator.pushReplacementNamed(context, "/home", arguments: {
       "temp": temp,
@@ -41,6 +43,7 @@ class _LoadingState extends State<Loading> {
       "main": main,
       "city": city,
       "description": description,
+      "icon": icon,
     });
   }
 
@@ -61,10 +64,28 @@ class _LoadingState extends State<Loading> {
     startup(input);
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Text("Loading"),
-        ),
-      ),
+          child: Column(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(
+                width: 500,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("images/background.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    "HamroMausam",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                )),
+          ),
+        ],
+      )),
     );
   }
 }

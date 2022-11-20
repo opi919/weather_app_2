@@ -12,6 +12,7 @@ class GetData {
   String main = "";
   String city = "";
   String description = "";
+  String icon = "";
 
   GetData({required this.location}) {
     this.location = location;
@@ -34,7 +35,8 @@ class GetData {
       main = weatherData["main"].toString();
       description = weatherData["description"].toString();
       city = getCity.toString();
-    } on Exception catch (e) {
+      icon = weatherData["icon"].toString();
+    } on Exception {
       temp = "N/A";
       feelsLike = "N/A";
       humidity = "N/A";
@@ -43,6 +45,7 @@ class GetData {
       main = "N/A";
       description = "N/A";
       city = "N/A";
+      icon = "N/A";
       print("Error in getting data from api");
     }
   }
